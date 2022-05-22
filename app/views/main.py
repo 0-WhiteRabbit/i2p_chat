@@ -54,16 +54,17 @@ def command():
         elif 'conn' in command[0:5]:
             url = urlparse(command.split(' ')[1])
             if connect_worker.init_connect(url):
-                connect_worker.mes += "Connect successes!"
+                connect_worker.mes += "Connect successes!\n"
             else:
-                connect_worker.mes += "Connection failed!"
+                connect_worker.mes += "Connection failed!\n"
         elif 'help' in command[0:5]:
             print('''connect to another user:
                     Your command: conn i2p://127.0.0.1:8000
                     send: send test
                     exit: 0''')
         elif 'send' in command[0:5]:
-            name, mes = command.strip().split(' ')[1:]
+            name = command.strip().split(' ')[1]
+            mes = ' '.join(command.strip().split(' ')[2:])
             connect_worker.send(name, mes)
 
     return render_template('index.html',

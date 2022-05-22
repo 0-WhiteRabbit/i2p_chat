@@ -40,7 +40,6 @@ class Connect:
                 self.sock.close()
             self.def_sock.close()
         except socket.timeout:
-            self.sock.close()
             self.def_sock.close()
         return []
 

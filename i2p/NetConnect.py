@@ -114,10 +114,11 @@ class NetConnect:
                 self.connect_pool.pop(conn)
 
     def send(self, name: str, mes: str, ex_from=""):
-        k = MESS + '\n' + name + '\n' + mes + '\n'
-        if name.encode() in self.net_name:
-            for i in self.connect_pool:
-                if i.name != ex_from:
-                    i.send(k)
-        else:
-            self.mes += '\nHost not found in net!'
+        for i in range(0, len(mes), 512):
+            k = MESS + '\n' + name + '\n' + mes[i:] + '\n'
+            if name.encode() in self.net_name:
+                for i in self.connect_pool:
+                    if i.name != ex_from:
+                        i.send(k)
+            else:
+                self.mes += '\nHost not found in net!'
